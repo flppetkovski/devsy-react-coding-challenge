@@ -6,6 +6,7 @@ import {
   FormControl,
   Input,
   Button,
+  Center,
 } from '@chakra-ui/react';
 
 export default function HookForm() {
@@ -25,7 +26,11 @@ export default function HookForm() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '600px',
+        maxHeight: '450px',
+        minHeight: '400px',
+        maxWidth: '450px',
+        border: '1px solid teal',
+        margin: '0 auto',
       }}
     >
       <form
@@ -34,7 +39,7 @@ export default function HookForm() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <FormControl isInvalid={errors.email}>
-          <FormLabel htmlFor="email">email</FormLabel>
+          <FormLabel htmlFor="email">Email</FormLabel>
           <Input
             id="email"
             placeholder="Email"
@@ -93,43 +98,68 @@ export default function HookForm() {
         <div
           style={{
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'baseline',
             justifyContent: 'space-between',
           }}
         >
-          <Button
-            mt={4}
-            colorScheme="teal"
-            isLoading={isSubmitting}
-            type="submit"
-          >
-            Submit
-          </Button>
           {!registered && (
             <p
               style={{
                 color: 'red',
-                display: 'inline-block',
-                marginLeft: '10px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
               }}
             >
-              <span style={{ color: 'black' }}>Not registered?</span>{' '}
-              <span onClick={() => setRegistered(true)}>Register now</span>
+              <span style={{ color: 'black', alignSelf: 'flex-end' }}>
+                Not registered?
+              </span>{' '}
+              <span
+                style={{ cursor: 'pointer', marginLeft: '17px' }}
+                onClick={() => setRegistered(true)}
+              >
+                Register now
+              </span>
             </p>
           )}
           {registered && (
             <p
               style={{
                 color: 'red',
-                display: 'inline-block',
-                marginLeft: '10px',
+                display: 'flex',
+                alignItems: 'baseline',
+                marginRight: '10px',
+                marginLeft: '15px',
               }}
             >
-              <span style={{ color: 'black' }}>Already registered?</span>{' '}
-              <span onClick={() => setRegistered(false)}>Login now</span>
+              <span
+                style={{
+                  color: 'black',
+                  marginLeft: '15px',
+                  marginRight: '10px',
+                }}
+              >
+                Already registered?
+              </span>{' '}
+              <span
+                style={{ cursor: 'pointer' }}
+                onClick={() => setRegistered(false)}
+              >
+                Login now
+              </span>
             </p>
           )}
         </div>
+        <Button
+          mt={4}
+          colorScheme="teal"
+          isLoading={isSubmitting}
+          type="submit"
+          display="block"
+          Width="70px"
+        >
+          Submit
+        </Button>
       </form>
     </div>
   );
