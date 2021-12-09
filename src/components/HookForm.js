@@ -6,6 +6,7 @@ import {
   FormControl,
   Input,
   Button,
+  Center,
 } from '@chakra-ui/react';
 
 export default function HookForm() {
@@ -37,6 +38,21 @@ export default function HookForm() {
         className="form"
         onSubmit={handleSubmit(onSubmit)}
       >
+        <FormLabel
+          style={{
+            marginBottom: '10px',
+            color: 'teal',
+            fontSize: '25px',
+            textAlign: 'center',
+            boxSizing: 'border-box',
+          }}
+        >
+          {registered ? (
+            <p style={{ marginBottom: '-10px' }}>Register</p>
+          ) : (
+            'Login'
+          )}
+        </FormLabel>
         <FormControl isInvalid={errors.email}>
           <FormLabel htmlFor="email">Email</FormLabel>
           <Input
