@@ -37,7 +37,7 @@ export default function HookForm() {
           <FormLabel htmlFor="email">email</FormLabel>
           <Input
             id="email"
-            placeholder="email"
+            placeholder="Email"
             {...register('email', {
               required: 'This is required',
               minLength: {
@@ -55,7 +55,7 @@ export default function HookForm() {
           <Input
             id="password"
             type="password"
-            placeholder="password"
+            placeholder="Password"
             {...register('password', {
               required: 'This is required',
               pattern: {
@@ -75,7 +75,7 @@ export default function HookForm() {
             <Input
               id="confirmPassword"
               type="password"
-              placeholder="confirmPassword"
+              placeholder="Confirm Password"
               {...register('confirmPassword', {
                 required: 'This is required',
                 minLength: { value: 6, message: 'Minimum length should be 6' },

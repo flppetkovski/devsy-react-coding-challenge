@@ -1,19 +1,6 @@
-import {
-  Box,
-  Flex,
-  Avatar,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
-  useColorModeValue,
-  Stack,
-  Center,
-} from '@chakra-ui/react';
+import { Box, Flex, Button, useColorModeValue, Stack } from '@chakra-ui/react';
 
-export default function Nav() {
+export default function Navbar() {
   return (
     <>
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
