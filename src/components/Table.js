@@ -11,7 +11,10 @@ import {
 
 const BookTable = () => {
   return (
-    <Table variant="simple">
+    <Table
+      variant="striped"
+      style={{ width: '70%', margin: '0 auto', marginTop: '-45px' }}
+    >
       <Thead>
         <Tr>
           <Th>ID</Th>

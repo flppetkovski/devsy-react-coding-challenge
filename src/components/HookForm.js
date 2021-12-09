@@ -6,7 +6,6 @@ import {
   FormControl,
   Input,
   Button,
-  Center,
 } from '@chakra-ui/react';
 
 export default function HookForm() {
@@ -129,7 +128,7 @@ export default function HookForm() {
                 display: 'flex',
                 alignItems: 'baseline',
                 marginRight: '10px',
-                marginLeft: '15px',
+                marginLeft: '-10px',
               }}
             >
               <span
@@ -155,8 +154,7 @@ export default function HookForm() {
           colorScheme="teal"
           isLoading={isSubmitting}
           type="submit"
-          display="block"
-          Width="70px"
+          width="270px"
         >
           Submit
         </Button>
