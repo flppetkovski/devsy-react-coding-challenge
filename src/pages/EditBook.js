@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import React, { useState } from 'react';
+import React from 'react';
 import {
   FormErrorMessage,
   FormLabel,
@@ -7,20 +7,21 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react';
-import { IconButton } from '@chakra-ui/react';
-import { EditIcon } from '@chakra-ui/react';
-import { DeleteIcon } from '@chakra-ui/react';
 import Navbar from '../components/Navbar';
-import { useLocation } from 'react-router-dom';
-export default function EditBook(props) {
+import { useLocation, useNavigate } from 'react-router-dom';
+import { updateBook } from '../store/actions/books';
+import { useDispatch } from 'react-redux';
+export default function EditBook() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { state } = useLocation();
-  console.log(state);
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
+      id: state.id,
       name: state.name,
       author: state.author,
       year: state.year,
@@ -28,8 +29,10 @@ export default function EditBook(props) {
     },
   });
 
-  function onSubmit(values) {
-    console.log(JSON.stringify(values, null, 2));
+  function onSubmit(data) {
+    console.log(data);
+    updateBook(data.id, data);
+    navigate('/main');
   }
   return (
     <>
@@ -159,6 +162,7 @@ export default function EditBook(props) {
               isLoading={isSubmitting}
               type="submit"
               width="100px"
+              onClick={() => navigate('/main')}
             >
               Cancel
             </Button>

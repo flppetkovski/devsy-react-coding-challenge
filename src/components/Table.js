@@ -66,6 +66,7 @@ const BookTable = props => {
                   onClick={() =>
                     navigate(`/edit-book/${book.id}`, {
                       state: {
+                        id: book.id,
                         name: book.name,
                         year: book.year,
                         author: book.author,

@@ -7,17 +7,21 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react';
-
+import { useDispatch } from 'react-redux';
 import Navbar from '../components/Navbar';
+import { createABook, createBook } from '../store/actions/books';
+import { useNavigate } from 'react-router-dom';
 export default function CreateBook() {
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
   } = useForm();
 
-  function onSubmit(values) {
-    console.log(JSON.stringify(values, null, 2));
+  async function onSubmit(data) {
+    createBook(data);
+    navigate('/main');
   }
   return (
     <>
@@ -136,7 +140,7 @@ export default function CreateBook() {
               mt={4}
               colorScheme="teal"
               isLoading={isSubmitting}
-              type="submit"
+              // type="submit"
               width="100px"
             >
               Delete
@@ -145,7 +149,8 @@ export default function CreateBook() {
               mt={4}
               colorScheme="teal"
               isLoading={isSubmitting}
-              type="submit"
+              // type="submit"
+              onClick={() => navigate('/main')}
               width="100px"
             >
               Cancel

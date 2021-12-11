@@ -6,6 +6,12 @@ import {
   DELETE_BOOK,
   DELETE_BOOK_LOADING,
   DELETE_BOOK_ERROR,
+  CREATE_BOOK,
+  CREATE_BOOK_LOADING,
+  CREATE_BOOK_ERROR,
+  UPDATE_BOOK_ERROR,
+  UPDATE_BOOK_LOADING,
+  UPDATE_BOOK,
 } from '../constants/action-types';
 
 const booksReducer = (state = { isLoading: false, books: [] }, action) => {
@@ -28,6 +34,30 @@ const booksReducer = (state = { isLoading: false, books: [] }, action) => {
       return { ...state };
     case DELETE_BOOK_ERROR:
       return { ...state, error: true };
+    case CREATE_BOOK:
+      console.log(action.payload);
+      return {
+        ...state,
+        books: state.books.concat(action.payload),
+        loading: false,
+        error: null,
+      };
+    case CREATE_BOOK_LOADING:
+      return { ...state, loading: true, error: false };
+    case CREATE_BOOK_ERROR:
+      return { ...state, loading: false, error: true };
+    case UPDATE_BOOK:
+      console.log(action.payload);
+      return {
+        ...state,
+        books: state.books.map(book =>
+          book.id === action.payload.id ? action.payload : book
+        ),
+      };
+    case UPDATE_BOOK_LOADING:
+      return { ...state, loading: true, error: false };
+    case UPDATE_BOOK_ERROR:
+      return { ...state, loading: false, error: true };
     default:
       return state;
   }
