@@ -1,3 +1,4 @@
+// import { signin, signup } from '../store/api/userActions';
 import { useForm } from 'react-hook-form';
 import React, { useState } from 'react';
 import {
@@ -6,31 +7,45 @@ import {
   FormControl,
   Input,
   Button,
-  Center,
 } from '@chakra-ui/react';
-
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 export default function HookForm() {
+  const [registered, setRegistered] = useState(false);
+  const [badCredentials, setBadCredentials] = useState(false);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  function onSubmit(values) {
+    if (registered) {
+      // dispatch(signin(values));
+      navigate('/main');
+    } else {
+      if (values.password !== values.confirmPassword) {
+        setBadCredentials(true);
+      } else {
+        // dispatch(signup(values));
+        navigate('/main');
+      }
+    }
+  }
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
   } = useForm();
-
-  function onSubmit(values) {
-    console.log(JSON.stringify(values, null, 2));
-  }
-  const [registered, setRegistered] = useState(false);
   return (
     <div
       style={{
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        maxHeight: '450px',
-        minHeight: '400px',
         maxWidth: '450px',
         border: '1px solid teal',
         margin: '0 auto',
+        minHeight: '450px',
+        maxHeight: '800px',
+        marginTop: '20vh',
       }}
     >
       <form
@@ -62,7 +77,7 @@ export default function HookForm() {
               required: 'This is required',
               minLength: {
                 value: 6,
-                message: 'Passwords must match, minimum length is 6',
+                message: 'Valid email must be provided',
               },
             })}
           />
@@ -79,8 +94,8 @@ export default function HookForm() {
             {...register('password', {
               required: 'This is required',
               pattern: {
-                value: /^.*(?=.{6,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[-_]).*$/,
-                message: 'Entered value does not match email format',
+                // value: /^.*(?=.{6,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[-_]).*$/,
+                message: 'Entered value does not match password format',
               },
               minLength: { value: 6, message: 'Minimum length should be 6' },
             })}
@@ -97,11 +112,10 @@ export default function HookForm() {
               type="password"
               placeholder="Confirm Password"
               {...register('confirmPassword', {
-                required: 'This is required',
                 minLength: { value: 6, message: 'Minimum length should be 6' },
                 pattern: {
-                  value: /^.*(?=.{6,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[-_]).*$/,
-                  message: 'Entered value does not match email format',
+                  // value: /^.*(?=.{6,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[-_]).*$/,
+                  message: 'Entered value does not match password format',
                 },
               })}
             />
@@ -171,9 +185,15 @@ export default function HookForm() {
           isLoading={isSubmitting}
           type="submit"
           width="270px"
+          onClick={() => {
+            navigate('/main');
+          }}
         >
           Submit
         </Button>
+        {badCredentials && (
+          <p style={{ color: 'red' }}>You have entered wrong credentials</p>
+        )}
       </form>
     </div>
   );

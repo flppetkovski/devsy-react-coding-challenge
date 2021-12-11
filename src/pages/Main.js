@@ -2,8 +2,19 @@ import { Box, ChakraProvider, theme, CSSReset, Button } from '@chakra-ui/react';
 import Searchbar from '../components/Searchbar';
 import Navbar from '../components/Navbar';
 import BookTable from '../components/Table';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getBooks } from '../store/actions/books';
+const Main = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [filteredBooks, setFilteredBooks] = useState([]);
+  useEffect(() => {
+    dispatch(getBooks());
+  }, [dispatch, filteredBooks]);
+  const books = useSelector(state => state.books);
 
-const Dashboard = () => {
   return (
     <ChakraProvider theme={theme}>
       <Box p={4}>
@@ -19,6 +30,9 @@ const Dashboard = () => {
             display="inline-block"
             marginBottom="-260px"
             marginLeft="50px"
+            onClick={() => {
+              navigate('/add-book');
+            }}
           >
             Add a Book
           </Button>
@@ -30,11 +44,11 @@ const Dashboard = () => {
               height: '50px',
             }}
           />{' '}
-          <BookTable />
+          <BookTable books={books} setFilteredBooks={setFilteredBooks} />
         </div>
       </Box>
     </ChakraProvider>
   );
 };
 
-export default Dashboard;
+export default Main;

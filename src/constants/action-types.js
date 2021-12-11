@@ -1,0 +1,13 @@
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
+export const SIGNIN = 'SIGNIN';
+export const FETCH_BOOKS = 'FETCH_BOOKS';
+export const CREATE_BOOK = 'CREATE_BOOK';
+export const UPDATE_BOOK = 'UPDATE_BOOK';
+export const BOOK_FETCH_ERROR = 'BOOK_FETCH_ERROR';
+export const BOOK_FETCH_LOADING = 'BOOK_FETCH_LOADING';
+export const BOOK_FETCH_LOADING_END = 'BOOK_FETCH_LOADING_END';
+export const BOOK_FETCH_RESET = 'BOOK_FETCH_RESET';
+export const DELETE_BOOK = 'DELETE_BOOK';
+export const DELETE_BOOK_LOADING = 'DELETE_BOOK_LOADING';
+export const DELETE_BOOK_ERROR = 'DELETE_BOOK_ERROR';
