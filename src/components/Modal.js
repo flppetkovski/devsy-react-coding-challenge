@@ -12,21 +12,33 @@ import {
   Portal,
 } from '@chakra-ui/react';
 import { useRef } from 'react';
-export default function InternalStateEx({ deleteTheBook, id }) {
+export default function InternalStateEx({ deleteTheBook, id, table }) {
   const initRef = useRef();
   return (
     <Popover closeOnBlur={false} placement="left" initialFocusRef={initRef}>
       {({ isOpen, onClose }) => (
         <>
-          <PopoverTrigger>
-            <IconButton
-              colorScheme="red"
-              aria-label="Edit Book"
-              icon={<DeleteIcon />}
-            >
-              {isOpen ? 'close' : 'open'}{' '}
-            </IconButton>
-          </PopoverTrigger>
+          {table ? (
+            <PopoverTrigger>
+              <IconButton
+                colorScheme="red"
+                aria-label="Edit Book"
+                icon={<DeleteIcon />}
+              >
+                {isOpen ? 'close' : 'open'}{' '}
+              </IconButton>
+            </PopoverTrigger>
+          ) : (
+            <PopoverTrigger>
+              <Button
+                style={{ marginTop: '16px', width: '33%' }}
+                colorScheme="teal"
+                aria-label="Delete Book"
+              >
+                {isOpen ? 'DELETE' : 'DELETE'}{' '}
+              </Button>
+            </PopoverTrigger>
+          )}
           <Portal>
             <PopoverContent>
               <PopoverHeader style={{ color: 'red', textAlign: 'center' }}>

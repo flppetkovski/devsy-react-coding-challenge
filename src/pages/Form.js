@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   FormErrorMessage,
   FormLabel,
@@ -8,11 +8,14 @@ import {
   Button,
 } from '@chakra-ui/react';
 import Navbar from '../components/Navbar';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { updateBook } from '../store/actions/books';
-import { useDispatch } from 'react-redux';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { deleteBook, updateBook } from '../store/actions/books';
+import Modal from '../components/Modal';
+
 export default function EditBook() {
-  const dispatch = useDispatch();
+  const params = useParams();
+  const [modal, setModal] = useState(false);
+  const [pid, setPid] = useState(params.id);
   const navigate = useNavigate();
   const { state } = useLocation();
   const {
@@ -21,19 +24,18 @@ export default function EditBook() {
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
-      id: state.id,
-      name: state.name,
-      author: state.author,
-      year: state.year,
-      tags: state.tags,
+      name: state.name ? state.name : '',
+      author: state.author ? state.author : '',
+      year: state.year ? state.year : '',
+      tags: state.tags ? state.tags : '',
     },
   });
 
   function onSubmit(data) {
-    console.log(data);
     updateBook(data.id, data);
     navigate('/main');
   }
+  console.log(pid);
   return (
     <>
       <Navbar />
@@ -50,6 +52,7 @@ export default function EditBook() {
           margin: '50px auto',
         }}
       >
+        {modal && <Modal editId={pid} deleteBook={deleteBook} />}
         <form
           style={{ maxWidth: '600px' }}
           className="form"
@@ -110,7 +113,7 @@ export default function EditBook() {
               {errors.year && errors.year.message}
             </FormErrorMessage>
           </FormControl>
-          <FormControl isInvalid={errors.Tags}>
+          <FormControl isInvalid={errors.tags}>
             <FormLabel style={{ marginBottom: '20px' }} htmlFor="tags">
               Tags
             </FormLabel>
@@ -147,15 +150,14 @@ export default function EditBook() {
               marginBottom: '20px',
             }}
           >
-            <Button
+            <Modal
               mt={4}
               colorScheme="teal"
               isLoading={isSubmitting}
-              type="submit"
               width="100px"
-            >
-              Delete
-            </Button>
+              onClick={() => setModal(true)}
+              table={false}
+            />
             <Button
               mt={4}
               colorScheme="teal"

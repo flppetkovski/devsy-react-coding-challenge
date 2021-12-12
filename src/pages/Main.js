@@ -31,7 +31,15 @@ const Main = () => {
             marginBottom="-260px"
             marginLeft="50px"
             onClick={() => {
-              navigate('/add-book');
+              navigate('/add-book', {
+                state: {
+                  id: '',
+                  name: '',
+                  year: '',
+                  author: '',
+                  tags: '',
+                },
+              });
             }}
           >
             Add a Book

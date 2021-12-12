@@ -2,8 +2,7 @@ import React from 'react';
 import { ChakraProvider, theme } from '@chakra-ui/react';
 import Login from './components/Login';
 import Main from './pages/Main';
-import CreateBook from './pages/CreateBook';
-import EditBook from './pages/EditBook';
+import Form from './pages/Form';
 import { CSSReset, Box } from '@chakra-ui/react';
 import { Routes, Route } from 'react-router-dom';
 function App() {
@@ -13,8 +12,8 @@ function App() {
       <Box p={4}>
         <Routes>
           <Route path="/main" element={<Main />} />
-          <Route path="/add-book" exact element={<CreateBook />} />
-          <Route path="/edit-book/:id" exact element={<EditBook />} />
+          <Route path="/add-book" exact element={<Form />} />
+          <Route path="/edit-book/:id" exact element={<Form />} />
           <Route path="/" exact element={<Login />} />
         </Routes>
       </Box>

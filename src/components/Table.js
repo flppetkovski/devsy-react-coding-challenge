@@ -75,7 +75,11 @@ const BookTable = props => {
                     })
                   }
                 />
-                <Modal id={book.id} deleteTheBook={deleteTheBook} />
+                <Modal
+                  table={true}
+                  id={book.id}
+                  deleteTheBook={deleteTheBook}
+                />
               </Td>
             </Tr>
           </Tbody>
