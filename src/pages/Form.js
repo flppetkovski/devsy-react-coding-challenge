@@ -9,13 +9,14 @@ import {
 } from '@chakra-ui/react';
 import Navbar from '../components/Navbar';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { deleteBook, updateBook } from '../store/actions/books';
+import { createABook, deleteBook, updateABook } from '../store/actions/books';
+import { useDispatch } from 'react-redux';
 import Modal from '../components/Modal';
 
 export default function EditBook() {
+  const dispatch = useDispatch();
   const params = useParams();
   const [modal, setModal] = useState(false);
-  const [pid, setPid] = useState(params.id);
   const navigate = useNavigate();
   const { state } = useLocation();
   const {
@@ -32,10 +33,17 @@ export default function EditBook() {
   });
 
   function onSubmit(data) {
-    updateBook(data.id, data);
+    state.name
+      ? dispatch(
+          updateABook(`${params.id}`, {
+            data,
+            ...data,
+            tags: data.tags,
+          })
+        )
+      : dispatch(createABook({ ...data, tags: data.tags.split(' ') }));
     navigate('/main');
   }
-  console.log(pid);
   return (
     <>
       <Navbar />
@@ -52,7 +60,7 @@ export default function EditBook() {
           margin: '50px auto',
         }}
       >
-        {modal && <Modal editId={pid} deleteBook={deleteBook} />}
+        {modal && <Modal deleteBook={deleteBook} />}
         <form
           style={{ maxWidth: '600px' }}
           className="form"
@@ -113,6 +121,7 @@ export default function EditBook() {
               {errors.year && errors.year.message}
             </FormErrorMessage>
           </FormControl>
+
           <FormControl isInvalid={errors.tags}>
             <FormLabel style={{ marginBottom: '20px' }} htmlFor="tags">
               Tags
@@ -162,7 +171,6 @@ export default function EditBook() {
               mt={4}
               colorScheme="teal"
               isLoading={isSubmitting}
-              type="submit"
               width="100px"
               onClick={() => navigate('/main')}
             >

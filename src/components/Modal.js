@@ -12,8 +12,15 @@ import {
   Portal,
 } from '@chakra-ui/react';
 import { useRef } from 'react';
-export default function InternalStateEx({ deleteTheBook, id, table }) {
+import { deleteBook } from '../store/actions/books';
+import { useDispatch } from 'react-redux';
+import { useParams, useNavigate } from 'react-router-dom';
+
+export default function InternalStateEx({ deleteTheBook, id, table, editId }) {
+  const dispatch = useDispatch();
   const initRef = useRef();
+  const params = useParams();
+  const navigate = useNavigate();
   return (
     <Popover closeOnBlur={false} placement="left" initialFocusRef={initRef}>
       {({ isOpen, onClose }) => (
@@ -65,14 +72,29 @@ export default function InternalStateEx({ deleteTheBook, id, table }) {
                   >
                     Close
                   </Button>
-                  <Button
-                    mt={4}
-                    colorScheme="red"
-                    ref={initRef}
-                    onClick={() => deleteTheBook(id)}
-                  >
-                    Delete
-                  </Button>
+                  {table && (
+                    <Button
+                      mt={4}
+                      colorScheme="red"
+                      ref={initRef}
+                      onClick={() => deleteTheBook(id)}
+                    >
+                      Delete
+                    </Button>
+                  )}
+                  {!table && (
+                    <Button
+                      mt={4}
+                      colorScheme="red"
+                      ref={initRef}
+                      onClick={() => {
+                        dispatch(deleteBook(params.id));
+                        navigate('/main');
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  )}
                 </div>
               </PopoverBody>
             </PopoverContent>

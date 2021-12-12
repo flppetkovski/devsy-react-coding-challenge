@@ -35,7 +35,6 @@ const booksReducer = (state = { isLoading: false, books: [] }, action) => {
     case DELETE_BOOK_ERROR:
       return { ...state, error: true };
     case CREATE_BOOK:
-      console.log(action.payload);
       return {
         ...state,
         books: state.books.concat(action.payload),
@@ -47,7 +46,6 @@ const booksReducer = (state = { isLoading: false, books: [] }, action) => {
     case CREATE_BOOK_ERROR:
       return { ...state, loading: false, error: true };
     case UPDATE_BOOK:
-      console.log(action.payload);
       return {
         ...state,
         books: state.books.map(book =>
@@ -55,7 +53,7 @@ const booksReducer = (state = { isLoading: false, books: [] }, action) => {
         ),
       };
     case UPDATE_BOOK_LOADING:
-      return { ...state, loading: true, error: false };
+      return { loading: true };
     case UPDATE_BOOK_ERROR:
       return { ...state, loading: false, error: true };
     default:

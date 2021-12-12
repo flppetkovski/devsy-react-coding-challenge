@@ -8,23 +8,24 @@ import {
   Td,
 } from '@chakra-ui/react';
 import { IconButton } from '@chakra-ui/react';
-import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
+import { EditIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Modal from '../components/Modal';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { deleteBook, getBooks } from '../store/actions/books';
 
 const BookTable = props => {
   const {
     books: { books },
     setFilteredBooks,
+    filteredBooks,
   } = props;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(getBooks());
-  }, []);
+  }, [dispatch, filteredBooks]);
 
   const deleteTheBook = async id => {
     dispatch(deleteBook(id));
@@ -54,9 +55,7 @@ const BookTable = props => {
               <Td>{book.name}</Td>
               <Td>{book.author}</Td>
               <Td>{book.year}</Td>
-              <Td>
-                {book.tags.map(tag => (tag.length < 7 ? `${tag}` : `${tag}, `))}
-              </Td>
+              <Td>{book.tags && book.tags.map(tag => `${tag} `)}</Td>
 
               <Td style={{ display: 'flex', gap: '15px' }}>
                 <IconButton

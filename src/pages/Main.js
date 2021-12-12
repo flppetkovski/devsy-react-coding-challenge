@@ -52,7 +52,11 @@ const Main = () => {
               height: '50px',
             }}
           />{' '}
-          <BookTable books={books} setFilteredBooks={setFilteredBooks} />
+          <BookTable
+            books={books}
+            filteredBooks={filteredBooks}
+            setFilteredBooks={setFilteredBooks}
+          />
         </div>
       </Box>
     </ChakraProvider>
