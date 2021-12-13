@@ -38,8 +38,6 @@ const booksReducer = (state = { isLoading: false, books: [] }, action) => {
       return {
         ...state,
         books: state.books.concat(action.payload),
-        loading: false,
-        error: null,
       };
     case CREATE_BOOK_LOADING:
       return { ...state, loading: true, error: false };

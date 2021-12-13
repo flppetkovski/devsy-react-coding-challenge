@@ -1,25 +1,32 @@
 import { Box, Flex, Button, useColorModeValue, Stack } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { signOut } from '../store/actions/auth';
+import { useDispatch } from 'react-redux';
 export default function Navbar() {
   const navigate = useNavigate();
-  const [loggedIn, setLoggedIn] = useState(false);
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  useEffect(() => {
+    setEmail(JSON.parse(localStorage.getItem('email')));
+  }, [email, navigate, dispatch]);
+
   return (
     <>
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-          {loggedIn ? <Box>Email</Box> : <Box>&nbsp;</Box>}
+          {email ? <Box>{email}</Box> : <Box>&nbsp;</Box>}
 
           <Flex alignItems={'center'}>
             <Stack direction={'row'} spacing={7}></Stack>
             <Button
               onClick={() => {
+                dispatch(signOut());
                 navigate('/');
               }}
               style={{ border: '1px solid teal', width: '200px' }}
             >
-              {loggedIn ? 'Logout' : 'Login'}
+              {email ? 'Logout' : 'Login'}
             </Button>
           </Flex>
         </Flex>

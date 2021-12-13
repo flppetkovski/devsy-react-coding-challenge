@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FormErrorMessage,
   FormLabel,
@@ -8,9 +8,14 @@ import {
   Button,
 } from '@chakra-ui/react';
 import Navbar from '../components/Navbar';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import { createABook, deleteBook, updateABook } from '../store/actions/books';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../components/Modal';
 
 export default function EditBook() {
@@ -44,6 +49,14 @@ export default function EditBook() {
       : dispatch(createABook({ ...data, tags: data.tags.split(' ') }));
     navigate('/main');
   }
+  const loggedInUser = useSelector(state => state.loggedInUser);
+
+  useEffect(() => {
+    if (!loggedInUser.length === 0) {
+      <Navigate to="/" />;
+    }
+  }, []);
+
   return (
     <>
       <Navbar />

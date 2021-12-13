@@ -5,6 +5,7 @@ import Main from './pages/Main';
 import Form from './pages/Form';
 import { CSSReset, Box } from '@chakra-ui/react';
 import { Routes, Route } from 'react-router-dom';
+
 function App() {
   return (
     <ChakraProvider theme={theme}>

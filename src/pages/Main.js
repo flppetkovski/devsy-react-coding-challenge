@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import Navbar from '../components/Navbar';
 import BookTable from '../components/Table';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBooks } from '../store/actions/books';
@@ -17,30 +17,39 @@ const Main = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const books = useSelector(state => state.books);
+  const [initialBooks, setInitialBooks] = useState([]);
   const [filteredBooks, setFilteredBooks] = useState([]);
-  const initRef = useRef('');
+  const initRef = useRef(null);
+  const loggedInUser = useSelector(state => state.loggedInUser);
+
   useEffect(() => {
     dispatch(getBooks());
-    setFilteredBooks(books.books);
+    setInitialBooks(books.books);
   }, []);
+
+  const searchBooks = initialBooks.filter(
+    book =>
+      book.name.toLowerCase().includes(value.toLowerCase() || ' ') ||
+      book.author.toLowerCase().includes(value.toLowerCase() || ' ') ||
+      book.year.includes(value.toLowerCase() || ' ')
+  );
   useEffect(() => {
     setTimeout(() => {
+      initRef.current.focus();
       setValue(' ');
       setValue('');
-    }, 0.05);
+    }, 0.2);
   }, []);
 
-  const searchBooks = books.books.filter(
-    book =>
-      book.name.toLowerCase().includes(value.toLowerCase() || '') ||
-      book.author.toLowerCase().includes(value.toLowerCase() || '') ||
-      book.year.includes(value.toLowerCase() || '')
-  );
-
   useEffect(() => {
-    initRef.current.focus();
     setFilteredBooks(searchBooks);
   }, [value]);
+
+  useEffect(() => {
+    if (!loggedInUser.length === 0) {
+      <Navigate to="/" />;
+    }
+  });
 
   return (
     <ChakraProvider theme={theme}>

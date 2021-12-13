@@ -1,6 +1,5 @@
-// import { signin, signup } from '../store/api/userActions';
 import { useForm } from 'react-hook-form';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FormErrorMessage,
   FormLabel,
@@ -8,25 +7,27 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { sign_up, login } from '../store/actions/auth';
+
 export default function HookForm() {
+  const loggedInUser = useSelector(state => state.loggedInUser);
   const [registered, setRegistered] = useState(false);
   const [badCredentials, setBadCredentials] = useState(false);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  function onSubmit(values) {
-    if (registered) {
-      // dispatch(signin(values));
+  async function onSubmit(data) {
+    if (!registered) {
+      dispatch(login(data.email, data.password));
+      localStorage.setItem('email', JSON.stringify(data.email));
       navigate('/main');
-    } else {
-      if (values.password !== values.confirmPassword) {
-        setBadCredentials(true);
-      } else {
-        // dispatch(signup(values));
-        navigate('/main');
-      }
+    } else if (registered) {
+      dispatch(sign_up(data.email, data.password, data.confirmPassword));
+      localStorage.setItem('email', JSON.stringify(data.email));
+      navigate('/main');
+    } else if (data.password !== data.confirmPassword) {
+      setBadCredentials(true);
     }
   }
   const {
@@ -34,6 +35,12 @@ export default function HookForm() {
     register,
     formState: { errors, isSubmitting },
   } = useForm();
+
+  useEffect(() => {
+    if (!loggedInUser.length === 0) {
+      <Navigate to="/main" />;
+    }
+  }, []);
   return (
     <div
       style={{
@@ -72,6 +79,7 @@ export default function HookForm() {
           <FormLabel htmlFor="email">Email</FormLabel>
           <Input
             id="email"
+            name="email"
             placeholder="Email"
             {...register('email', {
               required: 'This is required',
@@ -89,12 +97,13 @@ export default function HookForm() {
           <FormLabel htmlFor="password">Password</FormLabel>
           <Input
             id="password"
+            name="password"
             type="password"
             placeholder="Password"
             {...register('password', {
               required: 'This is required',
               pattern: {
-                // value: /^.*(?=.{6,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[-_]).*$/,
+                value: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/,
                 message: 'Entered value does not match password format',
               },
               minLength: { value: 6, message: 'Minimum length should be 6' },
@@ -108,13 +117,14 @@ export default function HookForm() {
           <FormControl isInvalid={errors.confirmPassword}>
             <FormLabel htmlFor="confirmPassword">Confirm Password</FormLabel>
             <Input
-              id="confirmPassword"
+              id="confirmPassowrd"
+              name="confirmPassowrd"
               type="password"
               placeholder="Confirm Password"
               {...register('confirmPassword', {
                 minLength: { value: 6, message: 'Minimum length should be 6' },
                 pattern: {
-                  // value: /^.*(?=.{6,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[-_]).*$/,
+                  value: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/,
                   message: 'Entered value does not match password format',
                 },
               })}
@@ -185,9 +195,6 @@ export default function HookForm() {
           isLoading={isSubmitting}
           type="submit"
           width="270px"
-          onClick={() => {
-            navigate('/main');
-          }}
         >
           Submit
         </Button>
