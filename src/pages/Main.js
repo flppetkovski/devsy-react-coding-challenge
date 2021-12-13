@@ -23,6 +23,12 @@ const Main = () => {
     dispatch(getBooks());
     setFilteredBooks(books.books);
   }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setValue(' ');
+      setValue('');
+    }, 0.05);
+  }, []);
 
   const searchBooks = books.books.filter(
     book =>
