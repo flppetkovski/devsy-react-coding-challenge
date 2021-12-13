@@ -8,24 +8,23 @@ import {
 } from '@chakra-ui/react';
 import Navbar from '../components/Navbar';
 import BookTable from '../components/Table';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBooks } from '../store/actions/books';
+
 const Main = () => {
   const [value, setValue] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const books = useSelector(state => state.books);
-  const [initialBooks, setInitialBooks] = useState([]);
   const [filteredBooks, setFilteredBooks] = useState([]);
-  const initRef = useRef(null);
+  const initRef = useRef('');
   const loggedInUser = useSelector(state => state.loggedInUser);
 
   useEffect(() => {
     dispatch(getBooks());
     setFilteredBooks(books.books);
-    setInitialBooks(books.books);
   }, []);
   useEffect(() => {
     setTimeout(() => {
@@ -34,15 +33,19 @@ const Main = () => {
     }, 0.05);
   }, []);
 
-  const searchBooks = initialBooks.filter(
+  const searchBooks = books.books.filter(
     book =>
       book.name.toLowerCase().includes(value.toLowerCase() || '') ||
       book.author.toLowerCase().includes(value.toLowerCase() || '') ||
-      book.year.includes(value || '')
+      book.year.includes(value.toLowerCase() || '')
   );
 
   useEffect(() => {
     initRef.current.focus();
+    setFilteredBooks(searchBooks);
+  }, [value]);
+
+  useEffect(() => {
     setFilteredBooks(searchBooks);
   }, [value]);
 

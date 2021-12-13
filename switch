@@ -1,0 +1,77 @@
+[33mcommit 540a6170bc646e1119d18d87f8f5b1e29340b80f[m[33m ([m[1;36mHEAD -> [m[1;32mfilip[m[33m)[m
+Author: Filip Petkovski <flp_petkovski@yahoo.com>
+Date:   Mon Dec 13 22:39:31 2021 +0100
+
+    last child not showing up
+
+[33mcommit f4fc0e1ef393ff90658997cc0cb181722efd2811[m
+Author: Filip Petkovski <flp_petkovski@yahoo.com>
+Date:   Mon Dec 13 22:07:19 2021 +0100
+
+    added user actions
+
+[33mcommit 76515a356b37e53bb626482817bcc7a5473b9878[m[33m ([m[1;32mmaster[m[33m)[m
+Author: Filip Petkovski <flp_petkovski@yahoo.com>
+Date:   Mon Dec 13 04:08:19 2021 +0100
+
+    refresh bug fix
+
+[33mcommit 0f83377fe10b9ace53b0b6317181a2ff664c20fc[m
+Author: Filip Petkovski <flp_petkovski@yahoo.com>
+Date:   Mon Dec 13 02:35:25 2021 +0100
+
+    added input filtering
+
+[33mcommit 715e50a5e828be0a8f02d5078d8bf42210222864[m
+Author: Filip Petkovski <flp_petkovski@yahoo.com>
+Date:   Sun Dec 12 16:27:03 2021 +0100
+
+    fixed redux
+
+[33mcommit 394c550489470ac1483d888f9161ac36c86f9de4[m
+Author: Filip Petkovski <flp_petkovski@yahoo.com>
+Date:   Sun Dec 12 03:15:17 2021 +0100
+
+    finished routing
+
+[33mcommit 14b7f9cf7c459912205c12aaa148b3ea0e4e19f4[m
+Author: Filip Petkovski <flp_petkovski@yahoo.com>
+Date:   Sun Dec 12 00:55:41 2021 +0100
+
+    finished crud without tags
+
+[33mcommit cbb8216deb3bc25f1682144f6d0cae2046c977a3[m
+Author: Filip Petkovski <flp_petkovski@yahoo.com>
+Date:   Sat Dec 11 17:42:38 2021 +0100
+
+    added create and update form pages
+
+[33mcommit 9d4ff323e4213b741123b180d50b2678e6831769[m
+Author: Filip Petkovski <flp_petkovski@yahoo.com>
+Date:   Thu Dec 9 10:44:07 2021 +0100
+
+    login page almost done
+
+[33mcommit 9ffbd678837c19e13753e0db2d5d9c04f5593327[m
+Author: Filip Petkovski <flp_petkovski@yahoo.com>
+Date:   Thu Dec 9 10:13:38 2021 +0100
+
+    login page almost done
+
+[33mcommit ec76f8a9326c54bf1f44d90d1b983e4afde0fd0c[m
+Author: Filip Petkovski <flp_petkovski@yahoo.com>
+Date:   Thu Dec 9 09:56:13 2021 +0100
+
+    login page almost done
+
+[33mcommit 47d82391aec17c73cfc15e8a25c14570d785ff8e[m
+Author: Filip Petkovski <flp_petkovski@yahoo.com>
+Date:   Thu Dec 9 07:25:17 2021 +0100
+
+    login page almost done
+
+[33mcommit a025f38909f3be528a6030ad6d69a71622fffb1f[m
+Author: Filip Petkovski <flp_petkovski@yahoo.com>
+Date:   Thu Dec 9 07:08:35 2021 +0100
+
+    login page almost done
