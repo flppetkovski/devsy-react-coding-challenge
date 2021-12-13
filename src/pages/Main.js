@@ -24,24 +24,25 @@ const Main = () => {
 
   useEffect(() => {
     dispatch(getBooks());
+    setFilteredBooks(books.books);
     setInitialBooks(books.books);
+  }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setValue(' ');
+      setValue('');
+    }, 0.05);
   }, []);
 
   const searchBooks = initialBooks.filter(
     book =>
-      book.name.toLowerCase().includes(value.toLowerCase() || ' ') ||
-      book.author.toLowerCase().includes(value.toLowerCase() || ' ') ||
-      book.year.includes(value.toLowerCase() || ' ')
+      book.name.toLowerCase().includes(value.toLowerCase() || '') ||
+      book.author.toLowerCase().includes(value.toLowerCase() || '') ||
+      book.year.includes(value || '')
   );
-  useEffect(() => {
-    setTimeout(() => {
-      initRef.current.focus();
-      setValue(' ');
-      setValue('');
-    }, 0.2);
-  }, []);
 
   useEffect(() => {
+    initRef.current.focus();
     setFilteredBooks(searchBooks);
   }, [value]);
 
