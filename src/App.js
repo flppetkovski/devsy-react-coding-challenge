@@ -12,8 +12,8 @@ function App() {
       <Box p={4}>
         <Routes>
           <Route path="/main" element={<Main />} />
-          <Route path="/add-book" exact element={<Form />} />
           <Route path="/edit-book/:id" exact element={<Form />} />
+          <Route path="/edit-book" exact element={<Form />} />
           <Route path="/" exact element={<Login />} />
         </Routes>
       </Box>

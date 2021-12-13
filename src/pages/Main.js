@@ -1,37 +1,58 @@
-import { Box, ChakraProvider, theme, CSSReset, Button } from '@chakra-ui/react';
-import Searchbar from '../components/Searchbar';
+import {
+  Box,
+  ChakraProvider,
+  theme,
+  CSSReset,
+  Button,
+  Input,
+} from '@chakra-ui/react';
 import Navbar from '../components/Navbar';
 import BookTable from '../components/Table';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBooks } from '../store/actions/books';
 const Main = () => {
+  const [value, setValue] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const books = useSelector(state => state.books);
   const [filteredBooks, setFilteredBooks] = useState([]);
+  const initRef = useRef('');
   useEffect(() => {
     dispatch(getBooks());
-  }, [dispatch, filteredBooks]);
-  const books = useSelector(state => state.books);
+    setFilteredBooks(books.books);
+  }, []);
+
+  const searchBooks = books.books.filter(
+    book =>
+      book.name.toLowerCase().includes(value.toLowerCase() || '') ||
+      book.author.toLowerCase().includes(value.toLowerCase() || '') ||
+      book.year.includes(value.toLowerCase() || '')
+  );
+
+  useEffect(() => {
+    initRef.current.focus();
+    setFilteredBooks(searchBooks);
+  }, [value]);
 
   return (
     <ChakraProvider theme={theme}>
       <Box p={4}>
         <CSSReset />
         <Navbar />
-        <div style={{ marginTop: '-100px' }}>
+        <div style={{ marginTop: '-460px' }}>
           <Button
             size="md"
             height="48px"
             width="200px"
-            border="2px"
             borderColor="green.500"
             display="inline-block"
-            marginBottom="-260px"
             marginLeft="50px"
+            marginRight="50px"
+            border="2px solid teal"
             onClick={() => {
-              navigate('/add-book', {
+              navigate('/edit-book', {
                 state: {
                   id: '',
                   name: '',
@@ -44,18 +65,26 @@ const Main = () => {
           >
             Add a Book
           </Button>
-          <Searchbar
+          <Input
+            placeholder="Search..."
+            value={value}
+            onChange={e => setValue(e.target.value)}
+            ref={initRef}
             style={{
-              marginBottom: '-560px',
+              width: '50%',
+              margin: '150px 50px -70px auto',
+              border: '2px solid teal',
               display: 'inline-block',
               marginTop: '30rem',
               height: '50px',
             }}
-          />{' '}
+          />
           <BookTable
             books={books}
             filteredBooks={filteredBooks}
             setFilteredBooks={setFilteredBooks}
+            value={value}
+            searchBooks={searchBooks}
           />
         </div>
       </Box>

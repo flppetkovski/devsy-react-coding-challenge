@@ -47,7 +47,7 @@ const BookTable = props => {
           <Th>Actions</Th>
         </Tr>
       </Thead>
-      {books.map(book => {
+      {filteredBooks.map(book => {
         return (
           <Tbody key={book.id}>
             <Tr>
