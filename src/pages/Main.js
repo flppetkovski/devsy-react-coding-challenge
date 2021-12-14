@@ -25,7 +25,7 @@ const Main = () => {
   useEffect(() => {
     dispatch(getBooks());
     setFilteredBooks(books.books);
-  }, []);
+  }, [books.books.length]);
   useEffect(() => {
     setTimeout(() => {
       setValue(' ');
@@ -33,11 +33,11 @@ const Main = () => {
     }, 0.05);
   }, []);
 
-  const searchBooks = books.books.filter(
+  const searchBooks = books?.books?.filter(
     book =>
-      book.name.toLowerCase().includes(value.toLowerCase() || '') ||
-      book.author.toLowerCase().includes(value.toLowerCase() || '') ||
-      book.year.includes(value.toLowerCase() || '')
+      book.name?.toLowerCase().includes(value.toLowerCase() || '') ||
+      book.author?.toLowerCase().includes(value.toLowerCase() || '') ||
+      book.year?.includes(value.toLowerCase() || '')
   );
 
   useEffect(() => {
