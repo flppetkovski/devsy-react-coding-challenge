@@ -11,6 +11,7 @@ import {
   DELETE_BOOK_ERROR,
   DELETE_BOOK_LOADING,
   FETCH_BOOKS,
+  FETCH_TAGS,
   UPDATE_BOOK,
   UPDATE_BOOK_ERROR,
 } from '../../constants/action-types';
@@ -61,5 +62,16 @@ export const updateABook = (id, book) => {
     } catch (error) {
       dispatch({ type: UPDATE_BOOK_ERROR });
     }
+  };
+};
+export const getTags = async () => {
+  return axios.get('http://localhost:4000/api/tags');
+};
+export const fetchTags = async () => {
+  return async dispatch => {
+    let tags = [];
+    const { data } = await getTags();
+    tags = Object.keys(data);
+    return dispatch({ type: FETCH_TAGS, payload: tags });
   };
 };

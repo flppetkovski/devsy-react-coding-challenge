@@ -5,13 +5,14 @@ import {
   CSSReset,
   Button,
   Input,
+  Select,
 } from '@chakra-ui/react';
 import Navbar from '../components/Navbar';
 import BookTable from '../components/Table';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBooks } from '../store/actions/books';
+import { fetchTags, getBooks, getTags } from '../store/actions/books';
 
 const Main = () => {
   const [value, setValue] = useState('');
@@ -21,7 +22,16 @@ const Main = () => {
   const [filteredBooks, setFilteredBooks] = useState([]);
   const initRef = useRef('');
   const loggedInUser = useSelector(state => state.loggedInUser);
+  useEffect(() => {
+    const tgs = async () => {
+      return dispatch(await fetchTags());
+    };
+    tgs();
+  }, []);
 
+  const booktags = useSelector(state => books.tags);
+  const [tags, setTags] = useState([booktags]);
+  console.log(booktags);
   useEffect(() => {
     dispatch(getBooks());
     setFilteredBooks(books.books);
@@ -98,6 +108,24 @@ const Main = () => {
               height: '50px',
             }}
           />
+          <Select
+            variant="filled"
+            size="lg"
+            style={{
+              width: '15%',
+              display: 'inline',
+              position: 'absolute',
+              top: '-45px',
+              right: '50px',
+              textAlign: 'center',
+              border: '2px solid teal',
+            }}
+            placeholder="Select Genre"
+          >
+            {booktags.map(tag => (
+              <option key={tag.genre}>{tag}</option>
+            ))}
+          </Select>
           <BookTable
             books={books}
             filteredBooks={filteredBooks}

@@ -12,9 +12,13 @@ import {
   UPDATE_BOOK_ERROR,
   UPDATE_BOOK_LOADING,
   UPDATE_BOOK,
+  FETCH_TAGS,
 } from '../constants/action-types';
 
-const booksReducer = (state = { isLoading: false, books: [] }, action) => {
+const booksReducer = (
+  state = { isLoading: false, books: [], tags: [] },
+  action
+) => {
   switch (action.type) {
     case BOOK_FETCH_LOADING:
       return { ...state, isLoading: true };
@@ -25,6 +29,11 @@ const booksReducer = (state = { isLoading: false, books: [] }, action) => {
         ...state,
         isLoading: false,
         books: action.payload,
+      };
+    case FETCH_TAGS:
+      return {
+        ...state,
+        tags: action.payload,
       };
     case BOOK_FETCH_ERROR:
       return { ...state, error: true };

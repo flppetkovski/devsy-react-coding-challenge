@@ -5,6 +5,7 @@ export const LOGOUT_ERROR = 'LOGOUT_ERROR';
 export const SIGNUP = 'SIGNUP';
 export const SIGNUP_ERROR = 'SIGNUP_ERROR';
 export const FETCH_BOOKS = 'FETCH_BOOKS';
+export const FETCH_TAGS = 'FETCH_TAGS';
 export const CREATE_BOOK = 'CREATE_BOOK';
 export const CREATE_BOOK_LOADING = 'CREATE_BOOK_LOADING';
 export const CREATE_BOOK_ERROR = 'CREATE_BOOK_ERROR';
