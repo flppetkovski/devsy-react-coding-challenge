@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ChakraProvider, theme } from '@chakra-ui/react';
 import Login from './pages/Login';
 import Main from './pages/Main';
@@ -9,9 +9,6 @@ import { Routes, Route } from 'react-router-dom';
 let user = JSON.parse(localStorage.getItem('email'));
 
 function App() {
-  useEffect(() => {
-    user = JSON.parse(localStorage.getItem('email'));
-  }, [user]);
   return (
     <ChakraProvider theme={theme}>
       <CSSReset />
