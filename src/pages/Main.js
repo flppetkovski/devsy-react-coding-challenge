@@ -35,7 +35,7 @@ const Main = () => {
   useEffect(() => {
     dispatch(getBooks());
     setFilteredBooks(books.books);
-  }, [books.books.length]);
+  }, [books.books, books.books.length]);
   useEffect(() => {
     !loggedInUser && navigate('/');
     setTimeout(() => {
@@ -55,6 +55,10 @@ const Main = () => {
   useEffect(() => {
     setFilteredBooks(searchBooks);
   }, [value, booktag]);
+
+  useEffect(() => {
+    setFilteredBooks(searchBooks);
+  }, []);
 
   useEffect(() => {
     if (!loggedInUser.length === 0) {
