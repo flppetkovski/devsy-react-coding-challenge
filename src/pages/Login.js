@@ -7,7 +7,7 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { sign_up, login } from '../store/actions/auth';
 
@@ -40,7 +40,7 @@ export default function HookForm() {
     if (!loggedInUser.length === 0) {
       navigate('/main');
     }
-  }, []);
+  }, [loggedInUser.length, navigate]);
   return (
     <div
       style={{
