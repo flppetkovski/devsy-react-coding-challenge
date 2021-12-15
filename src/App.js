@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { ChakraProvider, theme } from '@chakra-ui/react';
-import Login from './components/Login';
+import Login from './pages/Login';
 import Main from './pages/Main';
 import Form from './pages/Form';
 import { CSSReset, Box } from '@chakra-ui/react';
