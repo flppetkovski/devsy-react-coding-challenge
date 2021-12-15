@@ -4,7 +4,7 @@ import Login from './components/Login';
 import Main from './pages/Main';
 import Form from './pages/Form';
 import { CSSReset, Box } from '@chakra-ui/react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 let user = JSON.parse(localStorage.getItem('email'));
 
@@ -12,7 +12,6 @@ function App() {
   useEffect(() => {
     user = JSON.parse(localStorage.getItem('email'));
   }, [user]);
-  const navigate = useNavigate();
   return (
     <ChakraProvider theme={theme}>
       <CSSReset />

@@ -12,11 +12,11 @@ import BookTable from '../components/Table';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTags, getBooks, getTags } from '../store/actions/books';
+import { fetchTags, getBooks } from '../store/actions/books';
 
 const Main = () => {
   const [value, setValue] = useState('');
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [booktag, setBookTag] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const books = useSelector(state => state.books);
@@ -30,50 +30,37 @@ const Main = () => {
     tgs();
   }, []);
 
-  // function q(books) {
-  //   for (let [key, value] of books.entries()) {
-  //     let a = JSON.stringify(value);
-
-  //     let b = JSON.parse(a);
-  //     console.log(a);
-  //   }
-  // }
-  // q(books.books);
   const booktags = useSelector(state => books.tags);
-  const [tags, setTags] = useState([booktags]);
+
   useEffect(() => {
     dispatch(getBooks());
     setFilteredBooks(books.books);
   }, [books.books.length]);
   useEffect(() => {
-    !loggedIn && navigate('/');
+    !loggedInUser && navigate('/');
     setTimeout(() => {
       setValue(' ');
       setValue('');
     }, 0.05);
-  }, []);
+  }, [loggedInUser, navigate]);
 
   const searchBooks = books?.books?.filter(
     book =>
-      book.name?.toLowerCase().includes(value.toLowerCase() || '') ||
-      book.author?.toLowerCase().includes(value.toLowerCase() || '') ||
-      book.year?.includes(value.toLowerCase() || '')
+      (book.name?.toLowerCase().includes(value.toLowerCase()) ||
+        book.author?.toLowerCase().includes(value.toLowerCase()) ||
+        book.year?.includes(value.toLowerCase())) &&
+      book.tags?.some(tag => tag.includes(booktag))
   );
 
   useEffect(() => {
-    initRef.current.focus();
     setFilteredBooks(searchBooks);
-  }, [value]);
-
-  useEffect(() => {
-    setFilteredBooks(searchBooks);
-  }, [value]);
+  }, [value, booktag]);
 
   useEffect(() => {
     if (!loggedInUser.length === 0) {
       navigate('/');
     }
-  }, [loggedInUser.length]);
+  }, [loggedInUser.length, navigate]);
 
   return (
     <ChakraProvider theme={theme}>
@@ -118,24 +105,26 @@ const Main = () => {
               height: '50px',
             }}
           />
-          {/* <Select
+          <Select
             variant="filled"
             size="lg"
             style={{
               width: '15%',
               display: 'inline',
               position: 'absolute',
-              top: '-45px',
+              top: '-50px',
               right: '50px',
               textAlign: 'center',
               border: '2px solid teal',
             }}
-            placeholder="Select Genre"
+            placeholder={booktag !== '' ? 'Clear Genres' : 'Select Genre'}
+            value={booktag}
+            onChange={e => setBookTag(e.target.value)}
           >
             {booktags.map(tag => (
-              <option key={tag.genre}>{tag}</option>
+              <option key={Math.random()}>{tag}</option>
             ))}
-          </Select> */}
+          </Select>
           <BookTable
             books={books}
             filteredBooks={filteredBooks}
