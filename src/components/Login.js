@@ -38,7 +38,7 @@ export default function HookForm() {
 
   useEffect(() => {
     if (!loggedInUser.length === 0) {
-      <Navigate to="/main" />;
+      navigate('/main');
     }
   }, []);
   return (

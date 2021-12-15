@@ -53,9 +53,9 @@ export default function EditBook() {
 
   useEffect(() => {
     if (!loggedInUser.length === 0) {
-      <Navigate to="/" />;
+      navigate('/');
     }
-  }, []);
+  }, [loggedInUser.length]);
 
   return (
     <>

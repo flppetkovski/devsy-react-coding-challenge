@@ -9,13 +9,14 @@ import {
 } from '@chakra-ui/react';
 import Navbar from '../components/Navbar';
 import BookTable from '../components/Table';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTags, getBooks, getTags } from '../store/actions/books';
 
 const Main = () => {
   const [value, setValue] = useState('');
+  const [loggedIn, setLoggedIn] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const books = useSelector(state => state.books);
@@ -29,14 +30,23 @@ const Main = () => {
     tgs();
   }, []);
 
+  // function q(books) {
+  //   for (let [key, value] of books.entries()) {
+  //     let a = JSON.stringify(value);
+
+  //     let b = JSON.parse(a);
+  //     console.log(a);
+  //   }
+  // }
+  // q(books.books);
   const booktags = useSelector(state => books.tags);
   const [tags, setTags] = useState([booktags]);
-  console.log(booktags);
   useEffect(() => {
     dispatch(getBooks());
     setFilteredBooks(books.books);
   }, [books.books.length]);
   useEffect(() => {
+    !loggedIn && navigate('/');
     setTimeout(() => {
       setValue(' ');
       setValue('');
@@ -61,9 +71,9 @@ const Main = () => {
 
   useEffect(() => {
     if (!loggedInUser.length === 0) {
-      <Navigate to="/" />;
+      navigate('/');
     }
-  });
+  }, [loggedInUser.length]);
 
   return (
     <ChakraProvider theme={theme}>
@@ -108,7 +118,7 @@ const Main = () => {
               height: '50px',
             }}
           />
-          <Select
+          {/* <Select
             variant="filled"
             size="lg"
             style={{
@@ -125,7 +135,7 @@ const Main = () => {
             {booktags.map(tag => (
               <option key={tag.genre}>{tag}</option>
             ))}
-          </Select>
+          </Select> */}
           <BookTable
             books={books}
             filteredBooks={filteredBooks}
