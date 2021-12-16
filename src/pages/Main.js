@@ -35,7 +35,7 @@ const Main = () => {
   useEffect(() => {
     dispatch(getBooks());
     setFilteredBooks(books.books);
-  }, [books.books, books.books.length]);
+  }, [books.books.length]);
   useEffect(() => {
     !loggedInUser && navigate('/');
     setTimeout(() => {
@@ -57,14 +57,10 @@ const Main = () => {
   }, [value, booktag]);
 
   useEffect(() => {
-    setFilteredBooks(searchBooks);
-  }, []);
-
-  useEffect(() => {
     if (!loggedInUser.length === 0) {
       navigate('/');
     }
-  }, [loggedInUser.length, navigate]);
+  }, [loggedInUser.length]);
 
   return (
     <ChakraProvider theme={theme}>
