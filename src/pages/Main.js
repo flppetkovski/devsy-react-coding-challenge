@@ -21,6 +21,7 @@ const Main = () => {
   const dispatch = useDispatch();
   const books = useSelector(state => state.books);
   const [filteredBooks, setFilteredBooks] = useState([]);
+  const [initialBooks, setInitialBooks] = useState([]);
   const initRef = useRef('');
   const loggedInUser = useSelector(state => state.loggedInUser);
   useEffect(() => {
@@ -34,7 +35,7 @@ const Main = () => {
 
   useEffect(() => {
     dispatch(getBooks());
-    setFilteredBooks(books.books);
+    setInitialBooks(books.books);
   }, [books.books.length]);
   useEffect(() => {
     !loggedInUser && navigate('/');
@@ -44,7 +45,7 @@ const Main = () => {
     }, 0.05);
   }, [loggedInUser, navigate]);
 
-  const searchBooks = books?.books?.filter(
+  const searchBooks = initialBooks.filter(
     book =>
       (book.name?.toLowerCase().includes(value.toLowerCase()) ||
         book.author?.toLowerCase().includes(value.toLowerCase()) ||
