@@ -20,6 +20,8 @@ const BookTable = props => {
     books: { books },
     setFilteredBooks,
     filteredBooks,
+    value,
+    tagname,
   } = props;
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -47,7 +49,7 @@ const BookTable = props => {
           <Th>Actions</Th>
         </Tr>
       </Thead>
-      {filteredBooks.map(book => {
+      {(value || tagname ? filteredBooks : books).map(book => {
         return (
           <Tbody key={book.id}>
             <Tr>
@@ -69,7 +71,7 @@ const BookTable = props => {
                         name: book.name,
                         year: book.year,
                         author: book.author,
-                        tags: book.tags,
+                        tags: book.tags.map(tag => `${tag} `),
                       },
                     })
                   }

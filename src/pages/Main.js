@@ -35,8 +35,9 @@ const Main = () => {
 
   useEffect(() => {
     dispatch(getBooks());
+    setFilteredBooks(books.books);
     setInitialBooks(books.books);
-  }, [books.books.length]);
+  }, []);
   useEffect(() => {
     !loggedInUser && navigate('/');
     setTimeout(() => {
@@ -47,9 +48,9 @@ const Main = () => {
 
   const searchBooks = initialBooks.filter(
     book =>
-      (book.name?.toLowerCase().includes(value.toLowerCase()) ||
-        book.author?.toLowerCase().includes(value.toLowerCase()) ||
-        book.year?.includes(value.toLowerCase())) &&
+      book.name?.toLowerCase().includes(value.toLowerCase()) ||
+      book.author?.toLowerCase().includes(value.toLowerCase()) ||
+      book.year?.includes(value.toLowerCase()) ||
       book.tags?.some(tag => tag.includes(booktag))
   );
 
@@ -131,7 +132,8 @@ const Main = () => {
             filteredBooks={filteredBooks}
             setFilteredBooks={setFilteredBooks}
             value={value}
-            searchBooks={searchBooks}
+            searchBooks={filteredBooks}
+            booktag={booktag}
           />
         </div>
       </Box>

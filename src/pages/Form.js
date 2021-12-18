@@ -8,12 +8,7 @@ import {
   Button,
 } from '@chakra-ui/react';
 import Navbar from '../components/Navbar';
-import {
-  Navigate,
-  useLocation,
-  useNavigate,
-  useParams,
-} from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { createABook, deleteBook, updateABook } from '../store/actions/books';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../components/Modal';
@@ -43,10 +38,12 @@ export default function EditBook() {
           updateABook(`${params.id}`, {
             data,
             ...data,
-            tags: data.tags,
+            tags: data.tags.split(' ').map(tag => tag),
           })
         )
-      : dispatch(createABook({ ...data, tags: data.tags.split(' ') }));
+      : dispatch(
+          createABook({ ...data, tags: data.tags.split(' ').map(tag => tag) })
+        );
     navigate('/main');
   }
   const loggedInUser = useSelector(state => state.loggedInUser);
